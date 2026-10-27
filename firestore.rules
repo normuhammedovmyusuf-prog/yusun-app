@@ -1,0 +1,63 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isSelf(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    match /users/{uid} {
+      allow read: if signedIn();
+
+      allow create, update: if isSelf(uid)
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.displayName is string
+        && request.resource.data.displayName.size() >= 1
+        && request.resource.data.displayName.size() <= 40;
+
+      allow delete: if isSelf(uid);
+    }
+
+    match /chats/{chatId} {
+      function member() {
+        return signedIn()
+          && resource.data.participants is list
+          && request.auth.uid in resource.data.participants;
+      }
+
+      allow read: if member();
+
+      allow create: if signedIn()
+        && request.resource.data.participants is list
+        && request.resource.data.participants.size() == 2
+        && request.auth.uid in request.resource.data.participants;
+
+      allow update: if member()
+        && request.resource.data.participants == resource.data.participants;
+
+      allow delete: if false;
+
+      match /messages/{messageId} {
+        function chatMember() {
+          return signedIn()
+            && request.auth.uid in get(
+              /databases/$(database)/documents/chats/$(chatId)
+            ).data.participants;
+        }
+
+        allow read: if chatMember();
+
+        allow create: if chatMember()
+          && request.resource.data.senderId == request.auth.uid
+          && request.resource.data.text is string
+          && request.resource.data.text.size() >= 1
+          && request.resource.data.text.size() <= 2000;
+
+        allow update, delete: if false;
+      }
+    }
+  }
+}
