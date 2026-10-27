@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101a35">
+  <meta name="description" content="Yusun App — shaxsiy xabarlar">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+  <title>Yusun App</title>
+  <style>
+    :root { color-scheme: dark; --bg:#080d1a; --panel:#101a35; --panel2:#17264a; --blue:#4d91ff; --text:#f4f7ff; --muted:#aab7d5; --line:#26375e; --danger:#ff7c8b; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:radial-gradient(ellipse at top,#14264b 0,var(--bg) 58%); color:var(--text); font:16px system-ui,-apple-system,sans-serif; min-height:100vh; }
+    button,input { font:inherit; }
+    button { border:0; cursor:pointer; }
+    .wrap { width:min(760px,100%); margin:0 auto; padding:16px 14px calc(24px + env(safe-area-inset-bottom)); }
+    header { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 4px 18px; }
+    .brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:21px; letter-spacing:.2px; }
+    .logo { width:42px;height:42px;border-radius:14px;background:linear-gradient(145deg,#2e6cdd,#152d63);display:grid;place-items:center;box-shadow:0 8px 24px #0005; }
+    .logo svg { width:25px;height:25px; }
+    select,.secondary { background:#172342;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:9px 11px; }
+    .card { background:rgba(16,26,53,.94); border:1px solid var(--line); border-radius:20px; padding:18px; box-shadow:0 14px 40px #0003; }
+    h1 { font-size:24px; margin:2px 0 8px; }
+    h2 { font-size:18px; margin:0; }
+    p { color:var(--muted); line-height:1.5; margin:7px 0 16px; }
+    label { display:block; color:var(--muted);font-size:13px;margin:13px 0 7px; }
+    input { width:100%; padding:13px 14px; background:#080f23;border:1px solid #2b3b63;border-radius:12px;color:var(--text);outline:none; }
+    input:focus { border-color:var(--blue); box-shadow:0 0 0 3px #4d91ff22; }
+    .primary { width:100%; padding:13px 15px; margin-top:14px; background:linear-gradient(100deg,#3478ec,#4d91ff);color:white;font-weight:750;border-radius:12px; }
+    .primary:disabled { opacity:.55;cursor:wait; }
+    .small { font-size:12px; color:var(--muted); }
+    .hidden { display:none!important; }
+    .notice { padding:11px 12px;border-radius:12px;background:#101f3c;border:1px solid #29406d;color:#c8d9ff;font-size:13px;line-height:1.45;margin:12px 0; }
+    .error { color:#ffd1d6;background:#3a1824;border-color:#6c2d3b; }
+    .success { color:#c8ffe0;background:#123324;border-color:#245c42; }
+    .row { display:flex;align-items:center;gap:10px; }
+    .between { justify-content:space-between; }
+    .avatar { width:42px;height:42px;flex:0 0 42px;border-radius:50%;background:linear-gradient(135deg,#3b7be7,#29345f);display:grid;place-items:center;font-weight:800; }
+    .userrow { display:flex;align-items:center;gap:11px;padding:12px 0;border-bottom:1px solid var(--line); }
+    .userrow:last-child { border-bottom:0; }
+    .usertext { min-width:0;flex:1; }
+    .usertext strong { display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+    .usertext span { color:var(--muted);font-size:13px; }
+    .openchat { background:#1e3768;color:#dce9ff;border:1px solid #31518c;border-radius:10px;padding:9px 12px; }
+    .messages { height:min(48vh,440px);overflow:auto;display:flex;flex-direction:column;gap:9px;padding:14px 2px; }
+    .bubble { max-width:82%;padding:10px 12px;border-radius:15px;background:#1b2949;align-self:flex-start;overflow-wrap:anywhere; }
+    .bubble.mine { background:#2459a8;align-self:flex-end; }
+    .bubble .time { display:block;font-size:10px;opacity:.72;text-align:right;margin-top:5px; }
+    .sendrow { display:flex;gap:8px; }
+    .sendrow input { flex:1;min-width:0; }
+    .sendrow button { width:54px;border-radius:12px;background:var(--blue);color:white;font-weight:800; }
+    .topline { display:flex;align-items:center;gap:10px;margin-bottom:10px; }
+    .back { background:#1b2949;color:#fff;border-radius:10px;padding:9px 12px; }
+    footer { text-align:center;color:#8191b7;font-size:11px;padding:18px 0 4px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand"><div class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H11l-5.5 4v-4.2A2.5 2.5 0 0 1 4 13.5z" stroke="white" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 8h8M8 11h5" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div>Yusun App</div>
+      <select id="language" aria-label="Language">
+        <option value="uz">O‘zbekcha</option><option value="ru">Русский</option>
+      </select>
+    </header>
+
+    <div id="setupWarning" class="notice hidden"></div>
+    <div id="notice" class="notice hidden" role="status"></div>
+
+    <section id="authView" class="card">
+      <h1 data-i18n="welcome">Yusun App’ga xush kelibsiz</h1>
+      <p data-i18n="intro">Telefon raqamingiz bilan kiring va boshqa foydalanuvchilar bilan yozishing.</p>
+      <div id="phoneStep">
+        <label for="phone" data-i18n="phone">Telefon raqami (+998...)</label>
+        <input id="phone" type="tel" autocomplete="tel" placeholder="+998901234567">
+        <button id="sendCode" class="primary" data-i18n="sendCode">SMS kod yuborish</button>
+        <p class="small" data-i18n="phoneHint">Raqam xalqaro formatda yozilsin. Firebase SMS tasdiqlashi sozlangan bo‘lishi kerak.</p>
+      </div>
+      <div id="codeStep" class="hidden">
+        <label for="smsCode" data-i18n="smsCode">SMS kodi</label>
+        <input id="smsCode" inputmode="numeric" autocomplete="one-time-code" placeholder="123456">
+        <button id="verifyCode" class="primary" data-i18n="verify">Tasdiqlash va kirish</button>
+        <button id="backPhone" class="secondary" style="width:100%;margin-top:8px" data-i18n="changePhone">Raqamni o‘zgartirish</button>
+      </div>
+      <div id="recaptcha-container"></div>
+    </section>
+
+    <section id="profileView" class="card hidden">
+      <h1 data-i18n="profile">Profil</h1>
+      <p data-i18n="profileHint">Boshqa foydalanuvchilar sizni shu nom bilan ko‘radi.</p>
+      <label for="displayName" data-i18n="displayName">Ismingiz</label>
+      <input id="displayName" maxlength="40" placeholder="Yusun">
+      <button id="saveProfile" class="primary" data-i18n="save">Saqlash</button>
+      <button id="logoutProfile" class="secondary" style="width:100%;margin-top:8px" data-i18n="logout">Chiqish</button>
+    </section>
+
+    <section id="homeView" class="card hidden">
+      <div class="row between" style="margin-bottom:12px">
+        <div><h1 data-i18n="people">Foydalanuvchilar</h1><p style="margin:5px 0 0" id="signedInAs"></p></div>
+        <button id="editProfile" class="secondary" data-i18n="profile">Profil</button>
+      </div>
+      <label for="searchUsers" data-i18n="search">Ism bo‘yicha qidirish</label>
+      <input id="searchUsers" data-i18n-placeholder="searchPlaceholder" placeholder="Ism yozing...">
+      <div id="usersList"><p data-i18n="loading">Yuklanmoqda...</p></div>
+      <button id="logoutHome" class="secondary" style="width:100%;margin-top:14px" data-i18n="logout">Chiqish</button>
+    </section>
+
+    <section id="chatView" class="card hidden">
+      <div class="topline">
+        <button id="backHome" class="back" data-i18n="back">← Orqaga</button>
+        <div class="avatar" id="chatAvatar">Y</div>
+        <div style="min-width:0"><h2 id="chatTitle">Chat</h2><div class="small" id="chatSub"></div></div>
+      </div>
+      <div id="messages" class="messages" aria-live="polite"></div>
+      <form id="sendForm" class="sendrow">
+        <input id="messageInput" maxlength="2000" data-i18n-placeholder="messagePlaceholder" placeholder="Xabar yozing..." autocomplete="off">
+        <button aria-label="Send">➤</button>
+      </form>
+      <p class="small" data-i18n="textOnly">Hozircha faqat matnli xabarlar ishlaydi.</p>
+    </section>
+    <footer>Yusun App · MVP preview · <span data-i18n="notOfficial">Rasmiy ommaviy xizmat hali ishga tushmagan</span></footer>
+  </div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+                                                                     </html>
